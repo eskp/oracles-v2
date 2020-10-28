@@ -1,6 +1,6 @@
 let
   inherit (builtins) map filter listToAttrs attrValues isString currentSystem;
-  inherit (import sources.nixpkgs {}) pkgs;
+  inherit (import sources.dapptools {}) pkgs;
   inherit (pkgs) fetchgit;
   inherit (pkgs.lib.strings) removePrefix;
 
@@ -15,11 +15,7 @@ let
 in
 
 rec {
-  makerpkgs = { system ? currentSystem }: import sources.makerpkgs {
-    dapptoolsOverrides = { current = ./dapptools.nix; };
-  };
-
-  nodepkgs = { pkgs ? makerpkgs.pkgs, system ? currentSystem }: let
+  nodepkgs = { pkgs ? pkgs, system ? currentSystem }: let
     nodepkgs' = import ./nodepkgs.nix { inherit pkgs system; };
     shortNames = listToAttrs (map
       (x: { name = removePrefix "node_" (getName x.name); value = x; })

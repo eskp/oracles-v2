@@ -3,11 +3,10 @@ let
   sources = import ./nix/sources.nix;
 in
 
-{ pkgs ? import sources.nixpkgs {}
-, makerpkgs ? srcs.makerpkgs {}
+{ pkgs ? import sources.dapptools {}
 , nodepkgs ? srcs.nodepkgs { inherit pkgs; }
 , setzer-mcdSrc ? sources.setzer-mcd
-}: with makerpkgs.pkgs;
+}: with pkgs;
 
 let
   ssb-server = lib.setPrio 9 (nodepkgs.ssb-server.override {

@@ -1,0 +1,50 @@
+version: "3.6"
+
+services:
+  feed:
+    image: omnia:latest
+    env_file: feed.env
+    expose:
+      - ${SSB_NET_PORT}
+      - ${SSB_WS_PORT}
+    environment:
+      - SSB_SET_connections_incoming_net__external="${EXT_IP}"
+      - SSB_SET_connections_incoming_net__port=${SSB_NET_PORT}
+      - SSB_SET_connections_incoming_ws__external="${EXT_IP}"
+      - SSB_SET_connections_incoming_ws__port=${SSB_WS_PORT}
+      - SSB_SET_caps
+      - SSB_INVITE
+      - OMNIA_SET_mode="feed"
+      - OMNIA_SET_ethereum_from
+      - OMNIA_SET_ethereum_keystore
+      - OMNIA_SET_ethereum_password
+      - ETH_GAS
+      - FILE_PATH_ETH_PASSWORD
+      - FILE_CONT_ETH_PASSWORD
+      - FILE_PATH_ETH_KEY
+      - FILE_CONT_ETH_KEY
+
+  relayer:
+    image: omnia:latest
+    env_file: relayer.env
+    expose:
+      - ${SSB_NET_PORT}
+      - ${SSB_WS_PORT}
+    environment:
+      - SSB_SET_connections_incoming_net__external="${EXT_IP}"
+      - SSB_SET_connections_incoming_net__port=${SSB_NET_PORT}
+      - SSB_SET_connections_incoming_ws__external="${EXT_IP}"
+      - SSB_SET_connections_incoming_ws__port=${SSB_WS_PORT}
+      - SSB_SET_caps
+      - SSB_INVITE
+      - OMNIA_SET_mode="relayer"
+      - OMNIA_SET_ethereum_from
+      - OMNIA_SET_ethereum_keystore
+      - OMNIA_SET_ethereum_password
+      - OMNIA_SET_ethereum_network
+      - OMNIA_SET_ethereum_infuraKey
+      - ETH_GAS
+      - FILE_PATH_ETH_PASSWORD
+      - FILE_CONT_ETH_PASSWORD
+      - FILE_PATH_ETH_KEY
+      - FILE_CONT_ETH_KEY
